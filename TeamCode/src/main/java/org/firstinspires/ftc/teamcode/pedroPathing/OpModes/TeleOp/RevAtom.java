@@ -41,16 +41,19 @@ public class RevAtom extends OpMode {
 
 
             lift.auto(gamepad2.a);
+            Lift.reset(gamepad2.b);
 
 
-            if (gamepad2.dpad_up){
-                lift.paraPosicao(Constantes.MAXPOSE);
-            } else if (gamepad2.dpad_down) {
-                lift.paraPosicao(Constantes.MINPOSE);
+            if (Lift.getEstado() == Lift.AutoEstado.parado) {
+                if (gamepad2.dpad_up){
+                    Lift.paraPosicao(Constantes.MAXPOSE);
+                } else if (gamepad2.dpad_down) {
+                    Lift.paraPosicao(Constantes.MINPOSE);
+                } else {
+                    double potencia = -gamepad2.left_stick_y;
+                    Lift.controleManual(potencia);
+                }
             }
-            else{
-                double potencia = -gamepad1.left_stick_y;
-                lift.controleManual(potencia);
-            }
+
         }
     }

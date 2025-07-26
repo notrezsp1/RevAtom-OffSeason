@@ -47,7 +47,15 @@ public class Lift {
     public static boolean atualizar(){
         return !lift.isBusy();
     }
-
+    public static void reset(boolean b) {
+        if(b){
+        lift.setPower(0);
+        estado = AutoEstado.parado;
+        }
+    }
+    public static AutoEstado getEstado() {
+        return estado;
+    }
 
 
 
@@ -80,6 +88,7 @@ public class Lift {
                     lift.setPower(0);
                     timer.reset();
                     estado = AutoEstado.esperaDepoisBaixo;
+
                 }
                 break;
 
@@ -87,8 +96,8 @@ public class Lift {
                 if (timer.seconds() >= 0.5) {
                     estado = AutoEstado.parado;
 
-                break;
                 }
+                break;
             }
         }
     }
