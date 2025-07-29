@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.RConstants.Constantes;
 
 public class Lift {
-    private static DcMotorEx lift;
+     private static DcMotorEx lift;
     private static final ElapsedTime timer = new ElapsedTime();
 
     public enum AutoEstado { parado, paraCima, paraBaixo, esperaDepoisCima, esperaDepoisBaixo }
@@ -40,7 +40,7 @@ public class Lift {
     public static void paraBaixo() {
         lift.setTargetPosition(Constantes.MINPOSE);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setPower(1.0);
+        lift.setPower(-1.0);
         estado = AutoEstado.paraBaixo;
     }
 
@@ -88,7 +88,10 @@ public class Lift {
                     estado = AutoEstado.parado;
 
                 break;
+
                 }
+            default:
+                break;
             }
         }
     }
