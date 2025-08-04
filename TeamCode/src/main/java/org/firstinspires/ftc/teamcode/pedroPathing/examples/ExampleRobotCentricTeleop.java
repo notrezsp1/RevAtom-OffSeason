@@ -28,7 +28,7 @@ public class ExampleRobotCentricTeleop extends OpMode {
         follower.setStartingPose(startPose);
     }
 
-    /** This method is called continuously after Init while waiting to be started. **/
+    /** This method is called continuously after Initialize while waiting to be started. **/
     @Override
     public void init_loop() {
     }

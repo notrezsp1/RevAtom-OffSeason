@@ -2,25 +2,37 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Subsystems;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Claw {
 
-    private CRServo claw;
+    private static CRServo claw;
+
+    private static final ElapsedTime timer = new ElapsedTime();
+
 
     public Claw(HardwareMap hardwareMap){
         claw = hardwareMap.get(CRServo.class, "garra");
     }
 
 
-    public void open(){
+    public static void open(){
         claw.setPower(1.0);
     }
 
-    public void close(){
+    public static void close(){
         claw.setPower(-1.0);
     }
 
-    public void brake(){
+    public static void brake(){
         claw.setPower(0.0);
     }
+
+    public static boolean atualizarClaw() {
+        return timer.seconds() >= 0.5;
+    }
+
+
+
 }

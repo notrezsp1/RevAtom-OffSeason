@@ -18,12 +18,12 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 /**
  * This is the TurnTuner OpMode. This tracks the turning movement of the robot and displays the
  * necessary ticks to inches multiplier. This displayed multiplier is what's necessary to scale the
- * robot's current angle in ticks to the specified angle in radians. So, to use this, run the
- * tuner, then pull/push the robot to the specified angle using a protractor or lines on the ground.
- * When you're at the end of the angle, record the ticks to inches multiplier. Feel free to run
+ * robot's current angulo in ticks to the specified angulo in radians. So, to use this, run the
+ * tuner, then pull/push the robot to the specified angulo using a protractor or lines on the ground.
+ * When you're at the end of the angulo, record the ticks to inches multiplier. Feel free to run
  * multiple trials and average the results. Then, input the multiplier into the turning ticks to
  * radians in your localizer of choice.
- * You can adjust the target angle on FTC Dashboard: 192/168/43/1:8080/dash
+ * You can adjust the target angulo on FTC Dashboard: 192/168/43/1:8080/dash
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 5/6/2024
@@ -64,8 +64,8 @@ public class TurnTuner extends OpMode {
     public void loop() {
         poseUpdater.update();
 
-        telemetryA.addData("total angle", poseUpdater.getTotalHeading());
-        telemetryA.addLine("The multiplier will display what your turn ticks to inches should be to scale your current angle to " + ANGLE + " radians.");
+        telemetryA.addData("total angulo", poseUpdater.getTotalHeading());
+        telemetryA.addLine("The multiplier will display what your turn ticks to inches should be to scale your current angulo to " + ANGLE + " radians.");
         telemetryA.addData("multiplier", ANGLE / (poseUpdater.getTotalHeading() / poseUpdater.getLocalizer().getTurningMultiplier()));
 
         Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");

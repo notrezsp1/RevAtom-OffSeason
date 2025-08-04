@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 public class Extend {
  private static DcMotorEx extend;
  private static final ElapsedTime timer = new ElapsedTime();
-    public enum AutoEstado {parado, estender, retrair,}
+    public enum AutoEstado {parado, estender, retrair, esperaDepoisEstender, esperaDepoisRetrair}
     public static AutoEstado estado = AutoEstado.parado;
 
     public Extend(HardwareMap hardwareMap) {
@@ -25,12 +25,12 @@ public class Extend {
         extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public static  void manual(double power){
+    public static  void controleManual(double power){
         power = Range.clip(power, -1.0, 1.0);
         extend.setPower(power);
     }
 
-    public static void paraPose(int target){
+    public static void paraPosicao(int target){
         extend.setTargetPosition(target);
         extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extend.setPower(1.0);
@@ -50,20 +50,8 @@ public class Extend {
         estado = AutoEstado.retrair;
     }
 
-    public static boolean atualizar(){return !extend.isBusy();}
+    public static boolean atualizarLinear(){return !extend.isBusy();}
 
-    public void Automatico(boolean botaoB){
-        switch (estado){
-            case parado:
-                if (botaoB){
-                    retrair();
-                    estado = AutoEstado.retrair;
-                }
-                break;
-
-            case retrair:
-        }
-    }
 
 
 
