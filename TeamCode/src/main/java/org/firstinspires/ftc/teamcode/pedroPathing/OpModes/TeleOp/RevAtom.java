@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Initialize;
 import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Arm;
 import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Extend;
 import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Mov;
+import org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Uplift;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
@@ -28,7 +29,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
 public class RevAtom extends OpMode {
 
-        private DcMotorEx FRmotor, FLmotor, BRmotor, BLmotor;
         private Follower follower;
         private final Pose startPose = new Pose(0,0,0);
 
@@ -96,6 +96,12 @@ public class RevAtom extends OpMode {
                     Angle.parar();
                 }
                 Arm.auto(gamepad2.a);
+
+                if (gamepad1.a){
+                    Uplift.pindurar();
+                }
+
+
 
             telemetry.addData("Terget", arm.getCurrentPosition());
             }

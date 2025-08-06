@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.pedroPathing.constants;
 
 import com.pedropathing.localization.*;
 import com.pedropathing.localization.constants.*;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 public class LConstants {
     static {
-        ThreeWheelConstants.forwardTicksToInches = 0.0029;
-        ThreeWheelConstants.strafeTicksToInches = 0.0029;
+        ThreeWheelConstants.forwardTicksToInches = 0.0025;
+        ThreeWheelConstants.strafeTicksToInches = 0.0027;
         ThreeWheelConstants.turnTicksToInches = 0.003;
         ThreeWheelConstants.leftY = 6.2;
         ThreeWheelConstants.rightY = -6;
@@ -20,7 +21,7 @@ public class LConstants {
     }
 }
 
-//Left port : 2n
+//Left port : 2
 //Right port : 1
 //Srafe port : 0
 

@@ -7,11 +7,13 @@ public class Initialize {
     public final Claw claw;
     public final Arm arm;
     public final Extend extend;
+    public final Uplift uplift;
 
     public Initialize(HardwareMap hardwareMap) {
         angle = new Angle(hardwareMap);
         claw = new Claw(hardwareMap);
         arm = new Arm(hardwareMap);
         extend = new Extend(hardwareMap);
+        uplift = new Uplift(hardwareMap);
     }
 }

@@ -262,6 +262,7 @@ public class ExampleBucketAuto extends OpMode {
     @Override
     public void init() {
         pathTimer = new Timer();
+        actionTimer = new Timer();
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
