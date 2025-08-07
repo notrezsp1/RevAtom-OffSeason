@@ -84,7 +84,7 @@ public class AutoOff extends OpMode{
     public void autonomo(){
         switch (pathState){
             case 0:
-                follower.followPath(poseInicial, true);
+                follower.followPath(poseInicial);
                 setPathState(1);
                 break;
             case 1:
@@ -121,8 +121,6 @@ public class AutoOff extends OpMode{
                 if (!follower.isBusy()){
                     follower.followPath(quartoSampleB,true);
                 }
-                break;
-            default:
                 break;
         }
     }
