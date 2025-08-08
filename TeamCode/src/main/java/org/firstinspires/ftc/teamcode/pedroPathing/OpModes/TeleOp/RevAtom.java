@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.OpModes.TeleOp;
 
 
 
-import static org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.Arm.arm;
+
 
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
@@ -29,6 +29,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
 public class RevAtom extends OpMode {
 
+
+
         private Follower follower;
         private final Pose startPose = new Pose(0,0,0);
 
@@ -39,6 +41,7 @@ public class RevAtom extends OpMode {
             follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
             follower.setStartingPose(startPose);
             Initialize robot = new Initialize(hardwareMap);
+
         }
         @Override
             public void start() {
@@ -102,8 +105,8 @@ public class RevAtom extends OpMode {
                 }
 
 
-
-            telemetry.addData("Terget", arm.getCurrentPosition());
+            telemetry.addData("Terget", Arm.arm.getCurrentPosition());
+                telemetry.addData("poseExtend", Extend.extend.getCurrentPosition())     ;
             }
         }
 

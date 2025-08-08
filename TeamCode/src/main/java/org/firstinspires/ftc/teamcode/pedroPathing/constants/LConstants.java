@@ -5,6 +5,8 @@ import com.pedropathing.localization.constants.*;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 public class LConstants {
+
+
     static {
         ThreeWheelConstants.forwardTicksToInches = 0.0025;
         ThreeWheelConstants.strafeTicksToInches = 0.0027;

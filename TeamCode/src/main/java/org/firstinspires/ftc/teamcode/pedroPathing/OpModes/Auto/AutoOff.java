@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.OpModes.Auto;
 
 
 
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
@@ -31,13 +32,13 @@ public class AutoOff extends OpMode{
 
 
     public Follower follower;
-    private final Pose startPose = new Pose(8, 104, Math.toRadians(270));
+    private final Pose startPose = new Pose(8, 104, 270);
     private final Pose botarSample1 = new Pose(17, 125.5, Math.toRadians(-45));
-    private final Pose pegarSample2 = new Pose(17, 125.5, Math.toRadians(-11));
-    private final Pose botarSample2 = new Pose(17, 125.5, Math.toRadians(-45));
+    private final Pose pegarSample2 = new Pose(17, 125.4, Math.toRadians(-11));
+    private final Pose botarSample2 = new Pose(17, 125.3, Math.toRadians(-45));
     private final Pose pegarSample3 = new Pose(17, 125.5, Math.toRadians(18));
-    private final Pose botarSample3 = new Pose(17, 125.5, Math.toRadians(-45));
-    private final Pose pegarSample4 = new Pose(17,125, Math.toRadians(38));
+    private final Pose botarSample3 = new Pose(17, 125.4, Math.toRadians(-45));
+    private final Pose pegarSample4 = new Pose(17,125.3, Math.toRadians(38));
     private final Pose botarSample4 = new Pose(17, 125, Math.toRadians(-45));
 
 
@@ -88,38 +89,46 @@ public class AutoOff extends OpMode{
                 setPathState(1);
                 break;
             case 1:
+                new WaitCommand(450);
                 if(!follower.isBusy()){
                     follower.followPath(segundoSample, true);
                     setPathState(2);
                 }
                 break;
             case 2:
+                new WaitCommand(450);
                 if(!follower.isBusy()){
                     follower.followPath(segundoSampleB, true);
                     setPathState(3);
                 }
                 break;
             case 3:
+                new WaitCommand(450);
                 if (!follower.isBusy()){
                     follower.followPath(terceiroSample, true);
                     setPathState(4);
                 }
                 break;
             case 4:
+                new WaitCommand(450);
                 if (!follower.isBusy()){
                     follower.followPath(terceiroSampleB, true);
                     setPathState(5);
                 }
                 break;
             case 5:
+                new WaitCommand(450);
                 if (!follower.isBusy()){
                     follower.followPath(quartoSample, true);
                     setPathState(6);
                 }
                 break;
             case 6:
+                new WaitCommand(450);
                 if (!follower.isBusy()){
                     follower.followPath(quartoSampleB,true);
+                    setPathState(-1);
+
                 }
                 break;
         }
@@ -134,6 +143,8 @@ public class AutoOff extends OpMode{
     public void init() {
         pathTimer = new Timer();
         opmodeTimer = new Timer();
+        actionTimer = new Timer();
+
         opmodeTimer.resetTimer();
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
@@ -163,7 +174,7 @@ public class AutoOff extends OpMode{
     @Override
     public void start(){
         opmodeTimer.resetTimer();
-        pathState = 0;
+        setPathState (0);
     }
 
     @Override

@@ -22,4 +22,6 @@ public class Uplift {
         upLift.setPower(-1.0);
     }
 
+    public static void desinrolar(){ upLift.setPower(1.0); }
+
 }

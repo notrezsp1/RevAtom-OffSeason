@@ -6,12 +6,13 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.Subsystems.RConstants.
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 public class Extend {
-    private static DcMotorEx extend;
+    public static DcMotorEx extend;
     private static final ElapsedTime timer = new ElapsedTime();
     private static final ElapsedTime movementTimer = new ElapsedTime();
     private static final double TIMEOUT = 3.0;
@@ -21,29 +22,23 @@ public class Extend {
 
     public Extend(HardwareMap hardwareMap) {
         extend = hardwareMap.get(DcMotorEx.class, "Linear");
-        extend.setDirection(DcMotorEx.Direction.FORWARD);
-        extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        extend.setDirection(DcMotorEx.Direction.REVERSE);
         extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public static void controleManual(double power) {
-        if (Math.abs(power) > 0.1) {
+        if (Math.abs(power) > 0.1) { // deadzone
             extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            power = Range.clip(power, -1.0, 1.0);
-            if ((power > 0 && extend.getCurrentPosition() < EXTEND_MAX) ||
-                    (power < 0 && extend.getCurrentPosition() > EXTEND_MIN)) {
-                extend.setPower(power);
-            } else {
-                extend.setPower(0);
-            }
+            extend.setPower(Range.clip(power, -1.0, 1.0));
         } else {
             extend.setPower(0);
         }
     }
 
     public static void paraPosicao(int target) {
-        target = Range.clip(target, EXTEND_MIN, EXTEND_MAX);
+        target = Range.clip(target, EXTEND_MAX, EXTEND_MIN);
         extend.setTargetPosition(target);
         extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extend.setPower(1.0);

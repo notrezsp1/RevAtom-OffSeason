@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.OpModes.Auto;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
@@ -41,10 +42,12 @@ public class AutoRev extends OpMode {
     private final Pose botarSample3 = new Pose(xBasket, yBasket, Math.toRadians(-45));
     private final Pose pegarSample4 = new Pose(32.5, 124.5, Math.toRadians(45));
     private final Pose botarSample4 = new Pose( xBasket, yBasket, Math.toRadians(-45));
+    private final Pose park = new Pose(60, 102, Math.toRadians(90));
+    private final Pose controlPark = new Pose (50, 120);
 
 
 
-    private Path scorePreload, park;
+    private Path scorePreload, parking;
     private PathChain depositarSampleUm, pegarSampleDois, depositarSampleDois,
             pegarSampleTres, depositarSampleTres, pegarSampleQuatro;
 
@@ -81,6 +84,9 @@ public class AutoRev extends OpMode {
                 .addPath(new BezierLine(new Point(pegarSample4), new Point(botarSample4)))
                 .setLinearHeadingInterpolation(pegarSample4.getHeading(),botarSample4.getHeading())
                 .build();
+
+        parking = new Path(new BezierCurve(new Point(botarSample4),new Point(controlPark), new Point(park)));
+        parking.setLinearHeadingInterpolation(botarSample4.getHeading(), park.getHeading());
 
     }
 
@@ -135,6 +141,15 @@ public class AutoRev extends OpMode {
                     follower.followPath(pegarSampleQuatro, true);
 
                     setPathState(6);
+                    }
+                }
+                break;
+
+            case 6:
+
+                if (!follower.isBusy()){
+                    if(pathTimer.getElapsedTimeSeconds() > 0.5){
+                        follower.followPath(parking, true);
                     }
                 }
                 break;
