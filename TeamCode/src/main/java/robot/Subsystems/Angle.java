@@ -4,11 +4,17 @@ package robot.Subsystems;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.arcrobotics.ftclib.command.Subsystem;
 
-public class Angle {
+public class Angle implements Subsystem {
 
     public static CRServo angulo;
 
+    public static final Angle INSTANCE = new Angle ();
+
+    public Angle() {
+
+    }
     private static final ElapsedTime timer = new ElapsedTime();
 
     public Angle(HardwareMap hardwareMap){

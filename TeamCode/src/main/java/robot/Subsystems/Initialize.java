@@ -9,7 +9,8 @@ public class Initialize {
     public final Extend extend;
     public final Uplift uplift;
 
-    public final Mov mov;
+
+
 
     private static Initialize instance;
 
@@ -19,7 +20,6 @@ public class Initialize {
         arm = new Arm(hardwareMap);
         extend = new Extend(hardwareMap);
         uplift = new Uplift(hardwareMap);
-        mov = new Mov();
         instance = this;
     }
 

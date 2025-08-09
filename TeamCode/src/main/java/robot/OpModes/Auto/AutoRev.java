@@ -2,6 +2,10 @@ package robot.OpModes.Auto;
 
 
 
+import static robot.Subsystems.RConstants.Constantes.EXTEND_MAX;
+import static robot.Subsystems.RConstants.Constantes.MAXPOSE;
+
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
@@ -15,6 +19,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import config.constants.FConstants;
 import config.constants.LConstants;
+import robot.Subsystems.Angle;
+import robot.Subsystems.Arm;
+import robot.Subsystems.Claw;
+import robot.Subsystems.Extend;
 
 @Autonomous(name = "RevAuto", group = "Autonomo")
 public class AutoRev extends OpMode {
@@ -89,17 +97,29 @@ public class AutoRev extends OpMode {
     public void autonomousPathUpdate() {
         switch (pathState) {
             case 0:
+
                 follower.followPath(depositarSampleUm);
+
+
+
+
                 setPathState(1);
+
                 break;
 
             case 1:
+                new WaitCommand(10000000);
                 if(!follower.isBusy()) {
+
                     if(pathTimer.getElapsedTimeSeconds() > 0.5) {
+
+
                         follower.followPath(pegarSampleDois, true);
-                        setPathState(2);
+
+
                     }
                 }
+                setPathState(2);
                 break;
 
             case 2:

@@ -102,7 +102,7 @@ public class RevAtom extends OpMode {
                 }
 
 
-            telemetry.addData("Terget", Arm.arm.getCurrentPosition());
+            telemetry.addData("Target", Arm.arm.getCurrentPosition());
                 telemetry.addData("poseExtend", Extend.extend.getCurrentPosition())     ;
             }
         }

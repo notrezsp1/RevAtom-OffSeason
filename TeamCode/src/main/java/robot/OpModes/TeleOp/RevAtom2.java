@@ -4,6 +4,8 @@ import static robot.Subsystems.Arm.arm;
 import static robot.Subsystems.Extend.extend;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.util.Timer;
@@ -32,8 +34,6 @@ public class RevAtom2 extends OpMode {
     public Timer sTimer;
     private int sState;
     private final ElapsedTime timer = new ElapsedTime();
-    public enum AutoEstado { IDLE, ARM_UP, ANGLE_UP, RETRACT}
-    private AutoEstado estado = AutoEstado.IDLE;
 
     @Override
     public void init() {
@@ -68,6 +68,7 @@ public class RevAtom2 extends OpMode {
             submersible();
         }
 
+        atualizarTelemetria();
 
     }
 
@@ -142,6 +143,7 @@ public class RevAtom2 extends OpMode {
                 break;
         }
     }
+
     public void setSubmersibleState(int x) {
         sState = x;
         sTimer.resetTimer();

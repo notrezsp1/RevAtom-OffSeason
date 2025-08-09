@@ -2,15 +2,21 @@ package robot.Subsystems;
 
 
 
+import static robot.Subsystems.RConstants.Constantes.EXTEND_MAX;
+import static robot.Subsystems.RConstants.Constantes.EXTEND_MIN;
+import static robot.Subsystems.RConstants.Constantes.MAXPOSE;
+import static robot.Subsystems.RConstants.Constantes.MINPOSE;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.arcrobotics.ftclib.command.Subsystem;
 
 import robot.Subsystems.RConstants.Constantes;
 
-public class Arm {
+public class Arm implements Subsystem {
     public static DcMotorEx arm;
     private static final ElapsedTime timer = new ElapsedTime();
     private static final ElapsedTime movementTimer = new ElapsedTime();
@@ -36,7 +42,7 @@ public class Arm {
     }
 
     public static void paraPosicao(int target) {
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        target = Range.clip(target, MAXPOSE, MINPOSE);
         arm.setTargetPosition(target);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(1.0);
@@ -44,14 +50,14 @@ public class Arm {
     }
 
     public static void paraCima() {
-        if (arm.getCurrentPosition() < Constantes.MAXPOSE - 10) {
-            paraPosicao(Constantes.MAXPOSE);
+        if (arm.getCurrentPosition() < MAXPOSE - 10) {
+            paraPosicao(MAXPOSE);
         }
     }
 
     public static void paraBaixo() {
-        if (arm.getCurrentPosition() > Constantes.MINPOSE + 10) {
-            paraPosicao(Constantes.MINPOSE);
+        if (arm.getCurrentPosition() > MINPOSE + 10) {
+            paraPosicao(MINPOSE);
         }
     }
 
@@ -102,8 +108,7 @@ public class Arm {
                 }
                 break;
 
-            default:
-                break;
+
             }
         }
     }

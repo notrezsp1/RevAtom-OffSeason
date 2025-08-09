@@ -3,8 +3,9 @@ package robot.Subsystems;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.arcrobotics.ftclib.command.Subsystem;
 
-public class Claw {
+public class Claw implements Subsystem {
 
     private static CRServo claw;
 
@@ -13,6 +14,11 @@ public class Claw {
 
     public Claw(HardwareMap hardwareMap){
         claw = hardwareMap.get(CRServo.class, "garra");
+    }
+    public static final Claw INSTANCE = new Claw ();
+
+    public Claw() {
+
     }
 
 

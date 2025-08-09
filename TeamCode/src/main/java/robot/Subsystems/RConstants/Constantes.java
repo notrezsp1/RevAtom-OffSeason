@@ -2,7 +2,7 @@ package robot.Subsystems.RConstants;
 
 public class Constantes {
     public static final int MINPOSE= 0;
-    public static final int MAXPOSE = 2666;
+    public static final int MAXPOSE = 2200;
 
     public static final int MEDPOSE = 294;
 

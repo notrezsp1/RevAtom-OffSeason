@@ -4,9 +4,14 @@ package robot.OpModes.Auto;
 
 
 
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.RunCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.PathChain;
@@ -17,109 +22,116 @@ import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import config.constants.FConstants;
 import config.constants.LConstants;
+import robot.Subsystems.Angle;
+import robot.Subsystems.Arm;
+import robot.Subsystems.Claw;
+import robot.Subsystems.Extend;
+
 @Autonomous (name = "AutoOff")
 
 public class AutoOff extends OpMode{
-
     private Timer pathTimer, actionTimer, opmodeTimer;
     public int pathState;
 
 
 
     public Follower follower;
-    private final Pose startPose = new Pose(8, 104, 270);
-    private final Pose botarSample1 = new Pose(17, 125.5, Math.toRadians(-45));
-    private final Pose pegarSample2 = new Pose(17, 125.4, Math.toRadians(-11));
-    private final Pose botarSample2 = new Pose(17, 125.3, Math.toRadians(-45));
-    private final Pose pegarSample3 = new Pose(17, 125.5, Math.toRadians(18));
-    private final Pose botarSample3 = new Pose(17, 125.4, Math.toRadians(-45));
-    private final Pose pegarSample4 = new Pose(17,125.3, Math.toRadians(38));
-    private final Pose botarSample4 = new Pose(17, 125, Math.toRadians(-45));
+    public static Pose start = new Pose(8, 101, Math.toRadians(270));
+    public static Pose score = new Pose(17, 125, Math.toRadians(-45));
+    public static Pose second = new Pose(19, 121, Math.toRadians(0));
+    public static Pose third = new Pose(19, 131.5, Math.toRadians(0));
+    public static Pose four = new Pose(19, 135, Math.toRadians(15));
+    public static Pose park = new Pose(67, 95, Math.toRadians(90));
+    public static Pose contolPark = new Pose(50, 150);
 
 
 
 
 
-    private Path poseInicial;
+    private Path poseInicial, parking;
     private PathChain segundoSample, segundoSampleB, terceiroSample, terceiroSampleB, quartoSample, quartoSampleB;
     public void buildPaths(){
-        poseInicial = new Path(new BezierLine(new Point(startPose), new Point(botarSample1)));
-        poseInicial.setLinearHeadingInterpolation(startPose.getHeading(), botarSample1.getHeading());
+        poseInicial = new Path(new BezierLine(new Point(start), new Point(score)));
+        poseInicial.setLinearHeadingInterpolation(start.getHeading(), score.getHeading());
 
         segundoSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(botarSample1), new Point(pegarSample2)))
-                .setLinearHeadingInterpolation(botarSample1.getHeading(), pegarSample2.getHeading())
+                .addPath(new BezierLine(new Point(score), new Point(second)))
+                .setLinearHeadingInterpolation(score.getHeading(), second.getHeading())
                 .build();
 
         segundoSampleB = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(pegarSample2), new Point(botarSample2)))
-                .setLinearHeadingInterpolation(pegarSample2.getHeading(), botarSample2.getHeading())
+                .addPath(new BezierLine(new Point(second), new Point(score)))
+                .setLinearHeadingInterpolation(second.getHeading(), score.getHeading())
                 .build();
 
         terceiroSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(botarSample2), new Point(pegarSample3)))
-                .setLinearHeadingInterpolation(botarSample2.getHeading(), pegarSample3.getHeading())
+                .addPath(new BezierLine(new Point(score), new Point(third)))
+                .setLinearHeadingInterpolation(score.getHeading(), third.getHeading())
                 .build();
 
         terceiroSampleB = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(pegarSample3), new Point(botarSample3)))
-                .setLinearHeadingInterpolation(pegarSample3.getHeading(), botarSample3.getHeading())
+                .addPath(new BezierLine(new Point(third), new Point(score)))
+                .setLinearHeadingInterpolation(third.getHeading(), score.getHeading())
                 .build();
 
         quartoSample = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(botarSample3), new Point(pegarSample4)))
-                .setLinearHeadingInterpolation(botarSample3.getHeading(), pegarSample4.getHeading())
+                .addPath(new BezierLine(new Point(score), new Point(four)))
+                .setLinearHeadingInterpolation(score.getHeading(), four.getHeading())
                 .build();
 
         quartoSampleB = follower.pathBuilder()
-                .addPath(new BezierLine(new Point(pegarSample4), new Point(botarSample4)))
-                .setLinearHeadingInterpolation(pegarSample4.getHeading(), botarSample4.getHeading())
+                .addPath(new BezierLine(new Point(four), new Point(score)))
+                .setLinearHeadingInterpolation(four.getHeading(), score.getHeading())
                 .build();
+
+        parking = new Path(new BezierCurve(new Point(score), new Point(contolPark), new Point(park)));
+        parking.setLinearHeadingInterpolation(score.getHeading(), park.getHeading());
     }
 
     public void autonomo(){
         switch (pathState){
             case 0:
                 follower.followPath(poseInicial);
+                Claw.open();
+
                 setPathState(1);
                 break;
             case 1:
-                new WaitCommand(450);
-                if(!follower.isBusy()){
+
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 0.45){
                     follower.followPath(segundoSample, true);
                     setPathState(2);
                 }
                 break;
             case 2:
-                new WaitCommand(450);
                 if(!follower.isBusy()){
                     follower.followPath(segundoSampleB, true);
                     setPathState(3);
                 }
                 break;
             case 3:
-                new WaitCommand(450);
+
                 if (!follower.isBusy()){
                     follower.followPath(terceiroSample, true);
                     setPathState(4);
                 }
                 break;
             case 4:
-                new WaitCommand(450);
+
                 if (!follower.isBusy()){
                     follower.followPath(terceiroSampleB, true);
                     setPathState(5);
                 }
                 break;
             case 5:
-                new WaitCommand(450);
+
                 if (!follower.isBusy()){
                     follower.followPath(quartoSample, true);
                     setPathState(6);
                 }
                 break;
             case 6:
-                new WaitCommand(450);
+
                 if (!follower.isBusy()){
                     follower.followPath(quartoSampleB,true);
                     setPathState(-1);
@@ -128,6 +140,7 @@ public class AutoOff extends OpMode{
                 break;
         }
     }
+
 
     public void setPathState(int pState){
         pathState = pState;
@@ -143,7 +156,7 @@ public class AutoOff extends OpMode{
         opmodeTimer.resetTimer();
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
-        follower.setStartingPose(startPose);
+        follower.setStartingPose(start);
         buildPaths();
     }
 
