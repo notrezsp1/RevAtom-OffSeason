@@ -89,7 +89,7 @@ public class RevAtom extends OpMode {
                 }
 
                 if (gamepad2.left_bumper){
-                    Angle.cima();
+                    Angle.cima(1.0);
                 } else if (gamepad2.right_bumper) {
                     Angle.baixo();
                 }else {

@@ -42,11 +42,9 @@ public class Arm implements Subsystem {
     }
 
     public static void paraPosicao(int target) {
-        target = Range.clip(target, MAXPOSE, MINPOSE);
         arm.setTargetPosition(target);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(1.0);
-        movementTimer.reset();
     }
 
     public static void paraCima() {

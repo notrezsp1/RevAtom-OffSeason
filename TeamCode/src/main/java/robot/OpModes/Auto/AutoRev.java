@@ -2,6 +2,7 @@ package robot.OpModes.Auto;
 
 
 
+import static robot.Subsystems.Extend.extend;
 import static robot.Subsystems.RConstants.Constantes.EXTEND_MAX;
 import static robot.Subsystems.RConstants.Constantes.MAXPOSE;
 
@@ -97,9 +98,9 @@ public class AutoRev extends OpMode {
     public void autonomousPathUpdate() {
         switch (pathState) {
             case 0:
-
                 follower.followPath(depositarSampleUm);
 
+                extend.setTargetPosition(2100);
 
 
 

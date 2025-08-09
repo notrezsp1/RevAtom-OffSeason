@@ -9,9 +9,7 @@ public class Actions extends SequentialCommandGroup {
 
         addCommands(
                 new InstantCommand(Arm::paraCima),
-                new InstantCommand(Extend::estender),
-                new InstantCommand(Angle::cima),
-                new InstantCommand(Claw::open)
+                new InstantCommand(Extend::estender)
         );
     }
 }

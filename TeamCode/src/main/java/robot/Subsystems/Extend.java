@@ -37,11 +37,9 @@ public class Extend implements Subsystem{
     }
 
     public static void paraPosicao(int target) {
-        target = Range.clip(target, EXTEND_MAX, EXTEND_MIN);
         extend.setTargetPosition(target);
         extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extend.setPower(1.0);
-        movementTimer.reset();
     }
 
     public static void estender() {

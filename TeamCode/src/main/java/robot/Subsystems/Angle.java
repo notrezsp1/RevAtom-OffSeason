@@ -1,36 +1,31 @@
 package robot.Subsystems;
 
 
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.arcrobotics.ftclib.command.Subsystem;
 
-public class Angle implements Subsystem {
+public class Angle  {
 
-    public static CRServo angulo;
+    public static Servo angulo;
 
-    public static final Angle INSTANCE = new Angle ();
 
-    public Angle() {
-
-    }
     private static final ElapsedTime timer = new ElapsedTime();
 
     public Angle(HardwareMap hardwareMap){
-        angulo = hardwareMap.get(CRServo.class, "angulo");
+        angulo = hardwareMap.get(Servo.class, "angulo");
     }
 
-    public static void cima(){
-        angulo.setPower(1.0);
+    public static void cima(double valor){
+        angulo.setPosition(valor);
     }
 
     public static void baixo(){
-        angulo.setPower(-1.0);
+        angulo.setPosition(-1.0);
     }
 
     public static void parar(){
-        angulo.setPower(0.0);
+        angulo.setPosition(0.0);
     }
 
     public static boolean atualizarAngle() {

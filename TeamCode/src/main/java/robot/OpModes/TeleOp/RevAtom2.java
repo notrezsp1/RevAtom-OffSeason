@@ -107,18 +107,14 @@ public class RevAtom2 extends OpMode {
             Claw.open();
         } else if (gamepad2.left_trigger > 0.1) {
             Claw.close();
-        } else {
-            Claw.brake();
         }
     }
 
     private void controlarAngulo() {
         if (gamepad2.left_bumper) {
-            Angle.cima();
+            Angle.cima(1.0);
         } else if (gamepad2.right_bumper) {
             Angle.baixo();
-        } else {
-            Angle.parar();
         }
     }
     private void submersible() {
@@ -131,7 +127,7 @@ public class RevAtom2 extends OpMode {
                 break;
             case 1:
                 if (sTimer.getElapsedTimeSeconds() > 0.1) {
-                    Angle.cima();
+                    Angle.cima(1.0);
                     setSubmersibleState(2);
                 }
                 break;
