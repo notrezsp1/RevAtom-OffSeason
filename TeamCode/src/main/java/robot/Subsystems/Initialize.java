@@ -12,7 +12,7 @@ public class Initialize {
 
 
 
-    private static Initialize instance;
+
 
     public Initialize(HardwareMap hardwareMap) {
         angle = new Angle(hardwareMap);
@@ -20,10 +20,8 @@ public class Initialize {
         arm = new Arm(hardwareMap);
         extend = new Extend(hardwareMap);
         uplift = new Uplift(hardwareMap);
-        instance = this;
+
     }
 
-    public static Initialize get() {
-        return instance;
-    }
+
 }

@@ -4,8 +4,6 @@ import static robot.Subsystems.Arm.arm;
 import static robot.Subsystems.Extend.extend;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.util.Timer;
@@ -31,9 +29,7 @@ public class RevAtom2 extends OpMode {
     private final Pose startPose = new Pose(0,0,0);
     private boolean controleManualBraco = true;
     private boolean controleManualLinear = true;
-    public Timer sTimer;
-    private int sState;
-    private final ElapsedTime timer = new ElapsedTime();
+
 
     @Override
     public void init() {
@@ -41,7 +37,6 @@ public class RevAtom2 extends OpMode {
         follower.setStartingPose(startPose);
         Initialize robot = new Initialize(hardwareMap);
 
-        sTimer = new Timer();
     }
     @Override
     public void start() {
@@ -50,8 +45,10 @@ public class RevAtom2 extends OpMode {
 
     @Override
     public void loop() {
+        double velocidade = (gamepad1.right_trigger>0.1) ? 0.5 : 1.0;
         follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true) ;
         follower.update();
+        follower.setMaxPower(velocidade);
 
         controlarBraco();
         controlarLinear();
@@ -59,14 +56,15 @@ public class RevAtom2 extends OpMode {
         controlarAngulo();
 
         if (gamepad1.right_bumper) {
-            Uplift.pindurar();
+            Uplift.hang();
         }else if (gamepad1.left_bumper){
-            Uplift.desinrolar();
+            Uplift.unhang();
+        }
+        else{
+            Uplift.upLift.setPower(0);
         }
 
-        if (gamepad2.a){
-            submersible();
-        }
+        Arm.auto(gamepad2.a);
 
         atualizarTelemetria();
 
@@ -76,14 +74,14 @@ public class RevAtom2 extends OpMode {
 
         if (controleManualBraco) {
             double potencia = -gamepad2.left_stick_y;
-            Arm.controleManual(potencia);
+            Arm.controlManual(potencia);
         } else {
             if (gamepad2.dpad_up) {
-                Arm.paraCima();
+                Arm.toHigh();
             } else if (gamepad2.dpad_down) {
-                Arm.paraBaixo();
+                Arm.toLow();
             } else if (gamepad2.x) {
-                Arm.centro();
+                Arm.toMid();
             }
         }
     }
@@ -92,12 +90,12 @@ public class RevAtom2 extends OpMode {
 
         if (controleManualLinear) {
             double potencia = -gamepad2.right_stick_y;
-            Extend.controleManual(potencia);
+            Extend.setManualPower(potencia);
         } else {
             if (gamepad2.dpad_right) {
-                Extend.retrair();
+                Extend.retract();
             } else if (gamepad2.dpad_left) {
-                Extend.estender();
+                Extend.extend();
             }
         }
     }
@@ -112,38 +110,13 @@ public class RevAtom2 extends OpMode {
 
     private void controlarAngulo() {
         if (gamepad2.left_bumper) {
-            Angle.cima(1.0);
+            Angle.upPlus();
         } else if (gamepad2.right_bumper) {
-            Angle.baixo();
-        }
-    }
-    private void submersible() {
-
-
-        switch (sState) {
-            case 0:
-                Extend.retrair();
-                setSubmersibleState(1);
-                break;
-            case 1:
-                if (sTimer.getElapsedTimeSeconds() > 0.1) {
-                    Angle.cima(1.0);
-                    setSubmersibleState(2);
-                }
-                break;
-            case 2:
-                if (sTimer.getElapsedTimeSeconds() > 0.25) {
-                    Arm.paraCima();
-                    setSubmersibleState(-1);
-                }
-                break;
+            Angle.downMinus();
         }
     }
 
-    public void setSubmersibleState(int x) {
-        sState = x;
-        sTimer.resetTimer();
-    }
+
 
 
 
@@ -154,6 +127,5 @@ public class RevAtom2 extends OpMode {
         telemetry.addData("Posição Braço", arm.getCurrentPosition());
         telemetry.addData("Posição Linear", extend.getCurrentPosition());
         telemetry.addData("Modo Linear", controleManualLinear ? "MANUAL" : "AUTOMÁTICO");
-        telemetry.addData("Estado Braço", Arm.estado.toString());
     }
 }

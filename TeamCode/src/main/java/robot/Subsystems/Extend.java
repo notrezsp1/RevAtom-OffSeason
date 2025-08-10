@@ -14,8 +14,7 @@ import com.arcrobotics.ftclib.command.Subsystem;
 public class Extend implements Subsystem{
     public static DcMotorEx extend;
     private static final ElapsedTime timer = new ElapsedTime();
-    private static final ElapsedTime movementTimer = new ElapsedTime();
-    private static final double TIMEOUT = 3.0;
+
 
 
 
@@ -25,9 +24,10 @@ public class Extend implements Subsystem{
         extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        extend.setTargetPositionTolerance(5);
     }
 
-    public static void controleManual(double power) {
+    public static void setManualPower(double power) {
         if (Math.abs(power) > 0.1) { // deadzone
             extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             extend.setPower(Range.clip(power, -1.0, 1.0));
@@ -36,25 +36,25 @@ public class Extend implements Subsystem{
         }
     }
 
-    public static void paraPosicao(int target) {
+    public static void toPosition(int target) {
         extend.setTargetPosition(target);
         extend.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extend.setPower(1.0);
     }
 
-    public static void estender() {
+    public static void extend() {
         if (extend.getCurrentPosition() < EXTEND_MAX - 10) {
-            paraPosicao(EXTEND_MAX);
+            toPosition(EXTEND_MAX);
         }
     }
 
-    public static void retrair() {
+    public static void retract() {
         if (extend.getCurrentPosition() > EXTEND_MIN + 10) {
-            paraPosicao(EXTEND_MIN);
+            toPosition(EXTEND_MIN);
         }
     }
 
-    public static boolean atualizarLinear() {
-        return !extend.isBusy() || movementTimer.seconds() >= TIMEOUT;
+    public static boolean update() {
+        return !extend.isBusy();
     }
 }

@@ -1,0 +1,105 @@
+package path;
+
+import com.pedropathing.follower.Follower;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierCurve;
+import com.pedropathing.pathgen.BezierLine;
+import com.pedropathing.pathgen.PathChain;
+import com.pedropathing.pathgen.Point;
+
+import robot.Subsystems.Extend;
+
+public class fourSamples {
+
+    private static Follower follower;
+
+    public static Pose start = new Pose(8, 101, Math.toRadians(270));
+
+    public static PathChain  path1, path2, path3, path4, path5, path6, path7, path8;
+
+    public static void buildPaths(){
+
+        path1 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(8.000, 103.5, Point.CARTESIAN),
+                                new Point(17, 125.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(-45))
+                .build();
+
+        path2 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(17.000, 125.000, Point.CARTESIAN),
+                                new Point(19.000, 121.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
+                .build();
+
+        path3 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(19.000, 121.000, Point.CARTESIAN),
+                                new Point(17.000, 125.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
+                .build();
+
+        path4 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(17.000, 125.000, Point.CARTESIAN),
+                                new Point(19.000, 131.500, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(0))
+                .build();
+
+        path5 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(19.000, 131.500, Point.CARTESIAN),
+                                new Point(17.000, 125.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
+                .build();
+
+        path6 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(17.000, 125.000, Point.CARTESIAN),
+                                new Point(19.000, 132.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(20))
+                .build();
+
+        path7 = follower.pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Point(19.000, 135.000, Point.CARTESIAN),
+                                new Point(17.000, 125.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(15), Math.toRadians(-45))
+                .build();
+
+        path8 = follower.pathBuilder()
+                .addPath(
+                        new BezierCurve(
+                                new Point(17.000, 125.000, Point.CARTESIAN),
+                                new Point(50.000, 150.000, Point.CARTESIAN),
+                                new Point(67.000, 95.000, Point.CARTESIAN)
+                        )
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(90))
+                .build();
+    }
+
+
+}

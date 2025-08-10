@@ -23,12 +23,10 @@ public class Claw implements Subsystem {
     }
 
     public static void close(){
-        claw.setPosition(-1.0);
+        claw.setPosition(0);
     }
 
-    public static void brake(){
-        claw.setPosition(0.0);
-    }
+
 
     public static boolean atualizarClaw() {
         return timer.seconds() >= 0.5;

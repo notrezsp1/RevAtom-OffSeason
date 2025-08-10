@@ -2,8 +2,7 @@ package robot.Subsystems;
 
 
 
-import static robot.Subsystems.RConstants.Constantes.EXTEND_MAX;
-import static robot.Subsystems.RConstants.Constantes.EXTEND_MIN;
+import static robot.Subsystems.Angle.setPosition;
 import static robot.Subsystems.RConstants.Constantes.MAXPOSE;
 import static robot.Subsystems.RConstants.Constantes.MINPOSE;
 
@@ -18,21 +17,18 @@ import robot.Subsystems.RConstants.Constantes;
 
 public class Arm implements Subsystem {
     public static DcMotorEx arm;
-    private static final ElapsedTime timer = new ElapsedTime();
-    private static final ElapsedTime movementTimer = new ElapsedTime();
-    private static final double TIMEOUT = 3.0;
-
-    public enum AutoEstado { parado, paraCima, paraBaixo, esperaDepoisCima, esperaDepoisBaixo, medio }
-    public static AutoEstado estado = AutoEstado.parado;
+    private static final ElapsedTime timer = new ElapsedTime();;
+    public static int state;
 
     public Arm(HardwareMap hardwareMap) {
         arm = hardwareMap.get(DcMotorEx.class, "Angulo");
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setTargetPositionTolerance(5);
     }
 
-    public static void controleManual(double power) {
+    public static void controlManual(double power) {
         if (Math.abs(power) > 0.1) { // deadzone
             arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             arm.setPower(Range.clip(power, -1.0, 1.0));
@@ -40,73 +36,77 @@ public class Arm implements Subsystem {
             arm.setPower(0);
         }
     }
-
-    public static void paraPosicao(int target) {
+    public static void toPosition(int target) {
         arm.setTargetPosition(target);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(1.0);
     }
 
-    public static void paraCima() {
+    public static void toHigh() {
         if (arm.getCurrentPosition() < MAXPOSE - 10) {
-            paraPosicao(MAXPOSE);
+            setPosition(MAXPOSE);
         }
     }
 
-    public static void paraBaixo() {
+    public static void toLow() {
         if (arm.getCurrentPosition() > MINPOSE + 10) {
-            paraPosicao(MINPOSE);
+            setPosition(MINPOSE);
         }
     }
 
-    public static void centro() {
-        paraPosicao(Constantes.MEDPOSE);
-        estado = AutoEstado.medio;
+    public static void toMid() {
+        setPosition(Constantes.MEDPOSE);
+
     }
 
-    public static boolean atualizar() {
-        return !arm.isBusy() || movementTimer.seconds() >= TIMEOUT;
+    public static boolean update() {
+        return !arm.isBusy();
     }
 
     public static void auto(boolean botaoA) {
-        switch (estado) {
-            case parado:
+        switch (state) {
+            case 0:
                 if (botaoA) {
-                    paraCima();
-                    estado = AutoEstado.paraCima;
+                    toHigh();
+                    setState(1);
                 }
                 break;
 
-            case paraCima:
-                if (atualizar()) {
+            case 1:
+                if (update()) {
                     arm.setPower(0);
-                    timer.reset();
-                    estado = AutoEstado.esperaDepoisCima;
+                    setState(2);
                 }
                 break;
 
-            case esperaDepoisCima:
-                if (timer.seconds() >= 0.5) {
-                    paraBaixo();
-                    estado = AutoEstado.paraBaixo;
+            case 2:
+                if (update() && timer.seconds() >= 0.5) {
+                    toLow();
+                    setState(3);
                 }
                 break;
 
-            case paraBaixo:
-                if (atualizar()) {
+            case 3:
+                if (update()) {
                     arm.setPower(0);
-                    timer.reset();
-                    estado = AutoEstado.esperaDepoisBaixo;
+
+                    setState(4);
                 }
                 break;
 
-            case esperaDepoisBaixo:
+            case 4:
                 if (timer.seconds() >= 0.5) {
-                    estado = AutoEstado.parado;
+                    setState(-1);
                 }
                 break;
 
 
             }
+
+
+        }
+        public static void setState(int pState){
+            state = pState;
+            timer.reset();
         }
     }

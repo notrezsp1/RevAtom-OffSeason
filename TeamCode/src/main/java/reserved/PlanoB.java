@@ -1,4 +1,4 @@
-package robot.OpModes.TeleOp;
+package reserved;
 
 
 
@@ -24,7 +24,7 @@ import config.constants.LConstants;
 @Config
 @TeleOp(name = "TeleOpRevAtom", group = "TeleOp")
 
-public class RevAtom extends OpMode {
+public class PlanoB extends OpMode {
 
 
 
@@ -58,47 +58,41 @@ public class RevAtom extends OpMode {
 
             //CONTROLE DO BRAÇO
             if (gamepad2.dpad_up){
-                Arm.paraCima();
+                Arm.toHigh();
             } else if (gamepad2.dpad_down) {
-                Arm.paraBaixo();
+                Arm.toLow();
             }
             else{
                 double potencia = -gamepad2.left_stick_y;
-                Arm.controleManual(potencia);
+                Arm.controlManual(potencia);
             }
 
 
             //CONTROLE DO LINEAR
             if (gamepad2.dpad_right){
-                Extend.retrair();
+                Extend.retract();
             }else if (gamepad2.dpad_left){
-                Extend.estender();
+                Extend.extend();
             }
             else{
                 double power = gamepad2.right_stick_y;
-                Extend.controleManual(power);
+                Extend.setManualPower(power);
             }
 
             // CONTROLE GARRA TOTAL
                 if (gamepad2.right_trigger > 0.1) {
                     Claw.open();
                 } else if (gamepad2.left_trigger > 0.1) {
-                    Claw.close();
-                } else {
-                    Claw.brake();
-                }
+                    Claw.close();}
 
                 if (gamepad2.left_bumper){
-                    Angle.cima(1.0);
+                    Angle.up();
                 } else if (gamepad2.right_bumper) {
-                    Angle.baixo();
-                }else {
-                    Angle.parar();
-                }
+                    Angle.down();
                 Arm.auto(gamepad2.a);
 
                 if (gamepad1.a){
-                    Uplift.pindurar();
+                    Uplift.hang();
                 }
 
 
@@ -106,4 +100,5 @@ public class RevAtom extends OpMode {
                 telemetry.addData("poseExtend", Extend.extend.getCurrentPosition())     ;
             }
         }
+    }
 

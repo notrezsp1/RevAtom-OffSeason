@@ -15,10 +15,10 @@ public class Uplift {
         upLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public static void pindurar(){
+    public static void hang(){
         upLift.setPower(-1.0);
     }
 
-    public static void desinrolar(){ upLift.setPower(1.0); }
+    public static void unhang(){ upLift.setPower(1.0); }
 
 }
