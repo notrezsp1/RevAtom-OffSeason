@@ -1,8 +1,9 @@
 package robot.OpModes.Auto;
 
 
-import static path.fourSamples.buildPaths;
+
 import static path.fourSamples.path1;
+import static path.fourSamples.path2;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
@@ -41,49 +42,63 @@ public class AutoOff extends OpMode{
     public void autonomousPathUpdate(){
         switch (pathState){
             case 0:
-                follower.followPath(path1);
+                follower.followPath(path1, true );
                 Claw.close();
-                Arm.toPosition(2200);
-                Extend.toPosition(3750);
                 Angle.angulo.setPosition(-1);
+               Arm.toPosition(2800);
+                Extend.toPosition(3300);
                 timer.reset();
                 setPathState(1);
                 break;
-            case 1:
+           case 1:
 
 
-                if(!follower.isBusy() && timer.seconds() >= 1.5) {
+                if(!follower.isBusy() && timer.seconds() >= 2) {
                     Angle.angulo.setPosition(0.65);
-
-
                     timer.reset();
                     setPathState(2);
                 }
-
                 break;
 
             case 2:
-                if (!follower.isBusy() && timer.seconds() >= 0.5){
+                if (!follower.isBusy() && timer.seconds() >= 1.5 ){
                     Claw.open();
                     timer.reset();
                     setPathState(3);
                 }
-            /*case 2:
-                if(!follower.isBusy()){
-                    follower.followPath(path2, true);
-
-                    setPathState(3);
-                }
                 break;
             case 3:
+                if(!follower.isBusy() && timer.seconds() >= 1){
+                    Angle.angulo.setPosition(-1);
+                    timer.reset();
+                    setPathState(4);
+                }
+                break;
 
+           case 4:
+                if(!follower.isBusy() && timer.seconds() >= 1){
+                    Extend.toPosition(0);
+                    timer.reset();
+                    setPathState(5);
+                }
+
+                break;
+
+            case 5:
+                if (!follower.isBusy() && timer.seconds() >= 0.8){
+                    Arm.toPosition(700);
+                    follower.followPath(path2, true);
+                    timer.reset();
+                    setPathState(6);
+                }
+                break;
+
+           /*case 4:
                 if (!follower.isBusy()){
                     follower.followPath(path3, true);
                     follower.followPath(path4, true);
                     setPathState(4);
                 }
-                break;
-            case 4:
 
                 if (!follower.isBusy()){
                     follower.followPath(path5, true);
@@ -131,7 +146,7 @@ public class AutoOff extends OpMode{
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(fourSamples.start);
-        buildPaths();
+        fourSamples.buildPaths(follower);
     }
 
     @Override

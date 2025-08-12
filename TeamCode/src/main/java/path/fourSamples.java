@@ -17,13 +17,14 @@ public class fourSamples {
 
     public static PathChain  path1, path2, path3, path4, path5, path6, path7, path8;
 
-    public static void buildPaths(){
+    public static void buildPaths(Follower f){
+        follower = f;
 
         path1 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Point(8.000, 103.5, Point.CARTESIAN),
-                                new Point(17, 125.000, Point.CARTESIAN)
+                                new Point(8.000, 105, Point.CARTESIAN),
+                                new Point(21.800, 121.500, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(-45))

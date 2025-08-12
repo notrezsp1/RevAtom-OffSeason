@@ -32,9 +32,12 @@ public class Angle  {
         double novaPos = angulo.getPosition() - 0.25;
         angulo.setPosition(Range.clip(novaPos, 0.0, 1.0));
     }
+    public static void downmid(){
+        angulo.setPosition(0.5);
+    }
 
     public static void down(){
-        angulo.setPosition(0.0);
+        angulo.setPosition(0);
     }
 
 

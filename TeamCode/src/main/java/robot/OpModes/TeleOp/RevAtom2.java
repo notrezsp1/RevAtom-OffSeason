@@ -26,7 +26,7 @@ public class RevAtom2 extends OpMode {
 
 
     private Follower follower;
-    private final Pose startPose = new Pose(0,0,0);
+    private final Pose startPose = new Pose(0,0, Math.toRadians(0));
     private boolean controleManualBraco = true;
     private boolean controleManualLinear = true;
 
@@ -46,7 +46,7 @@ public class RevAtom2 extends OpMode {
     @Override
     public void loop() {
         double velocidade = (gamepad1.right_trigger>0.1) ? 0.5 : 1.0;
-        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true) ;
+        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
         follower.update();
         follower.setMaxPower(velocidade);
 
@@ -110,9 +110,9 @@ public class RevAtom2 extends OpMode {
 
     private void controlarAngulo() {
         if (gamepad2.left_bumper) {
-            Angle.upPlus();
+            Angle.up();
         } else if (gamepad2.right_bumper) {
-            Angle.downMinus();
+            Angle.down();
         }
     }
 

@@ -24,7 +24,6 @@ public class Extend implements Subsystem{
         extend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        extend.setTargetPositionTolerance(5);
     }
 
     public static void setManualPower(double power) {

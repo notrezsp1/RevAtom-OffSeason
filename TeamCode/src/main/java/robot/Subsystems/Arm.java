@@ -25,7 +25,6 @@ public class Arm implements Subsystem {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setTargetPositionTolerance(5);
     }
 
     public static void controlManual(double power) {

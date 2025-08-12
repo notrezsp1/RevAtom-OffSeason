@@ -23,7 +23,7 @@ public class Claw implements Subsystem {
     }
 
     public static void close(){
-        claw.setPosition(0);
+        claw.setPosition(-1);
     }
 
 
