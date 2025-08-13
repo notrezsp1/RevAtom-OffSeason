@@ -35,22 +35,19 @@ public class Arm implements Subsystem {
             arm.setPower(0);
         }
     }
-    public static void toPosition(int target) {
+    public static void toPosition(int target, double power) {
         arm.setTargetPosition(target);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        arm.setPower(1.0);
+        arm.setPower(power);
     }
 
     public static void toHigh() {
-        if (arm.getCurrentPosition() < MAXPOSE - 10) {
             setPosition(MAXPOSE);
-        }
+
     }
 
     public static void toLow() {
-        if (arm.getCurrentPosition() > MINPOSE + 10) {
             setPosition(MINPOSE);
-        }
     }
 
     public static void toMid() {

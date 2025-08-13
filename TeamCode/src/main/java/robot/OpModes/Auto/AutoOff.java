@@ -4,6 +4,8 @@ package robot.OpModes.Auto;
 
 import static path.fourSamples.path1;
 import static path.fourSamples.path2;
+import static path.fourSamples.path3;
+import static path.fourSamples.path4;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
@@ -28,11 +30,7 @@ public class AutoOff extends OpMode{
     private Follower follower;
 
     private Timer pathTimer, opmodeTimer;
-    private final boolean poseSet = false;
     private int pathState;
-    private final boolean clips = false;
-
-
     private final ElapsedTime timer = new ElapsedTime();
 
 
@@ -44,32 +42,30 @@ public class AutoOff extends OpMode{
             case 0:
                 follower.followPath(path1, true );
                 Claw.close();
-                Angle.angulo.setPosition(-1);
-               Arm.toPosition(2800);
-                Extend.toPosition(3300);
                 timer.reset();
                 setPathState(1);
                 break;
            case 1:
 
-
-                if(!follower.isBusy() && timer.seconds() >= 2) {
-                    Angle.angulo.setPosition(0.65);
-                    timer.reset();
-                    setPathState(2);
+               if(!follower.isBusy() && timer.seconds() >= 1.5) {
+                   Arm.toPosition(3000, 1);
+                   Angle.angulo.setPosition(-1);
+                   Extend.toPosition(3700);
+                   timer.reset();
+                   setPathState(2);
                 }
                 break;
 
             case 2:
-                if (!follower.isBusy() && timer.seconds() >= 1.5 ){
-                    Claw.open();
+                if (!follower.isBusy() && timer.seconds() >= 2.5 ){
+                    Angle.angulo.setPosition(0.65);
                     timer.reset();
                     setPathState(3);
                 }
                 break;
             case 3:
-                if(!follower.isBusy() && timer.seconds() >= 1){
-                    Angle.angulo.setPosition(-1);
+                if(!follower.isBusy() && timer.seconds() >= 1.5){
+                    Claw.open();
                     timer.reset();
                     setPathState(4);
                 }
@@ -77,7 +73,7 @@ public class AutoOff extends OpMode{
 
            case 4:
                 if(!follower.isBusy() && timer.seconds() >= 1){
-                    Extend.toPosition(0);
+                    Angle.angulo.setPosition(-1);
                     timer.reset();
                     setPathState(5);
                 }
@@ -86,13 +82,112 @@ public class AutoOff extends OpMode{
 
             case 5:
                 if (!follower.isBusy() && timer.seconds() >= 0.8){
-                    Arm.toPosition(700);
-                    follower.followPath(path2, true);
+                    Extend.toPosition(0);
                     timer.reset();
                     setPathState(6);
                 }
                 break;
 
+            case 6:
+                if (!follower.isBusy() && timer.seconds() >= 1.5){
+                    Arm.toPosition(450, 0.6);
+                    timer.reset();
+                    setPathState(7);
+                }
+                break;
+            case 7:
+                if(!follower.isBusy() && timer.seconds() >= 1.5){
+                    follower.followPath(path2, true);
+                    timer.reset();
+                    setPathState(8);
+                }
+                break;
+
+
+
+            case 8:
+                if (!follower.isBusy() && timer.seconds() >= 1){
+                    Extend.toPosition(1900);
+                    timer.reset();
+                    setPathState(9);
+                }
+                break;
+
+            case 9:
+                if (!follower.isBusy() && timer.seconds() >=1.5 ){
+                    Claw.close();
+                    timer.reset();
+                    setPathState(10);
+                }
+                break;
+
+            case 10:
+                if(!follower.isBusy() && timer.seconds() > 0.5){
+                    Extend.toPosition(0);
+                    follower.followPath(path3, true);
+                    timer.reset();
+                    setPathState(11);
+                }
+                break;
+
+            case 11:
+
+                if (!follower.isBusy() && timer.seconds() > 0.5){
+                    Arm.toPosition(3000, 1);
+                    Extend.toPosition(3700);
+                    timer.reset();
+                    setPathState(12);
+                }
+                break;
+
+            case 12:
+
+                if(!follower.isBusy() && timer.seconds() > 1.5){
+                    Angle.angulo.setPosition(0.65);
+                    timer.reset();
+                    setPathState(13);
+                }
+                break;
+            case 13:
+
+                if (!follower.isBusy() && timer.seconds() > 0.5){
+                    Claw.open();
+                    timer.reset();
+                    setPathState(14);
+                }
+            break;
+
+            case 14:
+                if (!follower.isBusy() && timer.seconds() > 1){
+                    Angle.angulo.setPosition(-1);
+                    timer.reset();
+                    setPathState(15);
+                }
+                break;
+            case 15:
+                if (!follower.isBusy() && timer.seconds() > 0.5){
+                    Extend.toPosition(0);
+                    timer.reset();
+                    setPathState(16);
+                }
+                break;
+            case 16:
+
+                if (!follower.isBusy() && timer.seconds() > 1.5){
+                    Arm.toPosition(350, 0.6);
+                    timer.reset();
+                    setPathState(17);
+                }
+                break;
+
+            case 17:
+
+                if (!follower.isBusy() && timer.seconds() > 0.5){
+                    follower.followPath(path4);
+                    timer.reset();
+                    setPathState(17);
+                }
+                break;
            /*case 4:
                 if (!follower.isBusy()){
                     follower.followPath(path3, true);
@@ -126,8 +221,8 @@ public class AutoOff extends OpMode{
                     follower.followPath(path8);
                     setPathState(-1);
                 }
-                break;*/
-
+                break;
+*/
         }
     }
 
