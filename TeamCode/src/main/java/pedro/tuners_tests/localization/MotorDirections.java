@@ -1,4 +1,4 @@
-package config.tuners_tests.localization;
+package pedro.tuners_tests.localization;
 
 import static com.pedropathing.follower.FollowerConstants.leftFrontMotorDirection;
 import static com.pedropathing.follower.FollowerConstants.leftFrontMotorName;
@@ -23,8 +23,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Arrays;
 import java.util.List;
 
-import config.constants.FConstants;
-import config.constants.LConstants;
+import pedro.constants.FConstants;
+import pedro.constants.LConstants;
 
 @TeleOp(name = "Motor Directions", group = "Teleop Test")
 public class MotorDirections extends OpMode {

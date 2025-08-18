@@ -1,12 +1,12 @@
-package config.examples;
+package pedro.examples;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import config.constants.FConstants;
-import config.constants.LConstants;
+import pedro.constants.FConstants;
+import pedro.constants.LConstants;
 
 /**
  * This is an example teleop that showcases movement and robot-centric driving.

@@ -16,8 +16,8 @@ import robot.Subsystems.Initialize;
 import robot.Subsystems.Arm;
 import robot.Subsystems.Extend;
 import robot.Subsystems.Uplift;
-import config.constants.FConstants;
-import config.constants.LConstants;
+import pedro.constants.FConstants;
+import pedro.constants.LConstants;
 
 ;
 
@@ -57,15 +57,11 @@ public class PlanoB extends OpMode {
 
 
             //CONTROLE DO BRAÇO
-            if (gamepad2.dpad_up){
-                Arm.toHigh();
-            } else if (gamepad2.dpad_down) {
-                Arm.toLow();
-            }
-            else{
+
+
                 double potencia = -gamepad2.left_stick_y;
                 Arm.controlManual(potencia);
-            }
+
 
 
             //CONTROLE DO LINEAR

@@ -1,4 +1,4 @@
-package config.examples;
+package pedro.examples;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -11,8 +11,8 @@ import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.PathChain;
 import com.pedropathing.pathgen.Point;
 
-import config.constants.FConstants;
-import config.constants.LConstants;
+import pedro.constants.FConstants;
+import pedro.constants.LConstants;
 
 /**
  * This is the Circle autonomous OpMode. It runs the robot in a PathChain that's actually not quite

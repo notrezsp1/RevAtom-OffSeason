@@ -1,4 +1,4 @@
-package config.constants;
+package pedro.constants;
 
 import com.pedropathing.localization.*;
 import com.pedropathing.localization.constants.*;

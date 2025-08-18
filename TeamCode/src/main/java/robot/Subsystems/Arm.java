@@ -41,14 +41,6 @@ public class Arm implements Subsystem {
         arm.setPower(power);
     }
 
-    public static void toHigh() {
-            setPosition(MAXPOSE);
-
-    }
-
-    public static void toLow() {
-            setPosition(MINPOSE);
-    }
 
     public static void toMid() {
         setPosition(Constantes.MEDPOSE);
@@ -63,7 +55,7 @@ public class Arm implements Subsystem {
         switch (state) {
             case 0:
                 if (botaoA) {
-                    toHigh();
+
                     setState(1);
                 }
                 break;
@@ -77,7 +69,6 @@ public class Arm implements Subsystem {
 
             case 2:
                 if (update() && timer.seconds() >= 0.5) {
-                    toLow();
                     setState(3);
                 }
                 break;

@@ -26,7 +26,7 @@ public class fourSamples {
                 .addPath(
                         new BezierLine(
                                 new Point(8.000, 103.900, Point.CARTESIAN),
-                                new Point(16.500, 119.300, Point.CARTESIAN)
+                                new Point(17, 121.800, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))
@@ -35,27 +35,27 @@ public class fourSamples {
         path2 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Point(16.500, 119.300, Point.CARTESIAN),
+                                new Point(17, 121.800, Point.CARTESIAN),
                                 new Point(22, 120.000, Point.CARTESIAN)
                         )
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(7.5))
+                .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(2.7))
                 .build();
 
         path3 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Point(22, 120, Point.CARTESIAN),
-                                new Point(16.500, 119.300, Point.CARTESIAN)
+                                new Point(17, 121.800, Point.CARTESIAN)
                         )
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(5), Math.toRadians(-45))
+                .setLinearHeadingInterpolation(Math.toRadians(2.7), Math.toRadians(-45))
                 .build();
 
         path4 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Point(16.500, 119.300, Point.CARTESIAN),
+                                new Point(17.500, 119.300, Point.CARTESIAN),
                                 new Point(16.500, 120, Point.CARTESIAN)
                         )
                 )
@@ -75,7 +75,7 @@ public class fourSamples {
         path6 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Point(17.000, 125.000, Point.CARTESIAN),
+                                new Point(17.500, 121.200, Point.CARTESIAN),
                                 new Point(19.000, 132.000, Point.CARTESIAN)
                         )
                 )
@@ -95,9 +95,9 @@ public class fourSamples {
         path8 = follower.pathBuilder()
                 .addPath(
                         new BezierCurve(
-                                new Point(17.000, 125.000, Point.CARTESIAN),
-                                new Point(50.000, 150.000, Point.CARTESIAN),
-                                new Point(67.000, 95.000, Point.CARTESIAN)
+                                new Point(17, 121.800, Point.CARTESIAN),
+                                new Point(63.406720741599074, 133.65469293163383, Point.CARTESIAN),
+                                new Point(60, 100, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(-45), Math.toRadians(90))

@@ -1,4 +1,4 @@
-package robot.OpModes.TeleOp;
+package reserved;
 
 import static robot.Subsystems.Arm.arm;
 import static robot.Subsystems.Extend.extend;
@@ -6,10 +6,8 @@ import static robot.Subsystems.Extend.extend;
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import robot.Subsystems.Angle;
 import robot.Subsystems.Claw;
@@ -17,8 +15,8 @@ import robot.Subsystems.Initialize;
 import robot.Subsystems.Arm;
 import robot.Subsystems.Extend;
 import robot.Subsystems.Uplift;
-import config.constants.FConstants;
-import config.constants.LConstants;
+import pedro.constants.FConstants;
+import pedro.constants.LConstants;
 
 @Config
 @TeleOp(name = "TeleOpRevAtom 2.0", group = "TeleOp")
@@ -37,6 +35,7 @@ public class RevAtom2 extends OpMode {
         follower.setStartingPose(startPose);
         Initialize robot = new Initialize(hardwareMap);
 
+
     }
     @Override
     public void start() {
@@ -45,6 +44,7 @@ public class RevAtom2 extends OpMode {
 
     @Override
     public void loop() {
+        
         double velocidade = (gamepad1.right_trigger>0.1) ? 0.5 : 1.0;
         follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
         follower.update();
@@ -75,14 +75,7 @@ public class RevAtom2 extends OpMode {
         if (controleManualBraco) {
             double potencia = -gamepad2.left_stick_y;
             Arm.controlManual(potencia);
-        } else {
-            if (gamepad2.dpad_up) {
-                Arm.toHigh();
-            } else if (gamepad2.dpad_down) {
-                Arm.toLow();
-            } else if (gamepad2.x) {
-                Arm.toMid();
-            }
+
         }
     }
 
