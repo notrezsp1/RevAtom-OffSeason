@@ -16,7 +16,7 @@ public class DualDrive extends OpMode {
 
     @Override
     public void init() {
-         r = new Robot(hardwareMap, autoEnd);
+         r = new Robot( autoEnd);
     }
 
     @Override

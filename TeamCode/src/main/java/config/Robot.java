@@ -23,16 +23,15 @@ import robot.Subsystems.Initialize;
 
 public class Robot {
     public  Follower f;
-    private  HardwareMap h;
+
     boolean controleManualBraco, controleManualLinear;
     private Initialize i;
     public Pose autoEndPose;
 
     public static Pose autoEnd = new Pose(60, 100, Math.toRadians(90));
 
-    public Robot(HardwareMap h, Pose autoEndPose) {
+    public Robot( Pose autoEndPose) {
         this.autoEndPose = autoEndPose;
-        this.h = h;
         f = new Follower(hardwareMap, FConstants.class, LConstants.class);
         i = new Initialize (hardwareMap);
 
@@ -104,6 +103,7 @@ public class Robot {
         f.update();
         f.setMaxPower(velocidade);
     }
+
 
 
 }

@@ -1,5 +1,6 @@
 package robot.Subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 import static robot.Subsystems.RConstants.Constantes.EXTEND_MAX;
 import static robot.Subsystems.RConstants.Constantes.EXTEND_MIN;
 
@@ -25,7 +26,6 @@ public class Extend implements Subsystem{
         extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
     public static void setManualPower(double power) {
         if (Math.abs(power) > 0.1) { // deadzone
             extend.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
