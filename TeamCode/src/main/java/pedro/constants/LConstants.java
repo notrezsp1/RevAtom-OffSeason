@@ -8,18 +8,20 @@ public class LConstants {
 
 
     static {
-        ThreeWheelConstants.forwardTicksToInches = 0.0025;
-        ThreeWheelConstants.strafeTicksToInches = 0.0027;
-        ThreeWheelConstants.turnTicksToInches = 0.003;
-        ThreeWheelConstants.leftY = 6.2;
-        ThreeWheelConstants.rightY = -6;
-        ThreeWheelConstants.strafeX = -2;
-        ThreeWheelConstants.leftEncoder_HardwareMapName = "BLmotor";
-        ThreeWheelConstants.rightEncoder_HardwareMapName = "BRmotor";
-        ThreeWheelConstants.strafeEncoder_HardwareMapName = "FRmotor";
-        ThreeWheelConstants.leftEncoderDirection = Encoder.FORWARD;
-        ThreeWheelConstants.rightEncoderDirection = Encoder.REVERSE;
-        ThreeWheelConstants.strafeEncoderDirection = Encoder.FORWARD;
+        ThreeWheelIMUConstants.forwardTicksToInches = 0.003;
+        ThreeWheelIMUConstants.strafeTicksToInches =  0.00291049487428112;
+        ThreeWheelIMUConstants.turnTicksToInches = 0.003;
+        ThreeWheelIMUConstants.leftY = 6.2;
+        ThreeWheelIMUConstants.rightY = -6;
+        ThreeWheelIMUConstants.strafeX = -2;
+        ThreeWheelIMUConstants.leftEncoder_HardwareMapName = "BLmotor";
+        ThreeWheelIMUConstants.rightEncoder_HardwareMapName = "BRmotor";
+        ThreeWheelIMUConstants.strafeEncoder_HardwareMapName = "FRmotor";
+        ThreeWheelIMUConstants.leftEncoderDirection = Encoder.FORWARD;
+        ThreeWheelIMUConstants.rightEncoderDirection = Encoder.REVERSE;
+        ThreeWheelIMUConstants.strafeEncoderDirection = Encoder.FORWARD;
+        ThreeWheelIMUConstants.IMU_HardwareMapName = "imu";
+        ThreeWheelIMUConstants.IMU_Orientation = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.DOWN, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
     }
 }
 

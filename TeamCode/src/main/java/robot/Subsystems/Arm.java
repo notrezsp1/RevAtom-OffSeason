@@ -45,6 +45,8 @@ public class Arm implements Subsystem {
     public static void toMid() {
         setPosition(Constantes.MEDPOSE);
 
+
+
     }
 
     public static boolean update() {

@@ -1,8 +1,12 @@
 package robot.OpModes.TeleOp;
 
+
+
 import static config.Robot.autoEnd;
 
 import config.Robot;
+
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -12,14 +16,13 @@ public class DualDrive extends OpMode {
 
     @Override
     public void init() {
-        r = new Robot(hardwareMap, telemetry, gamepad1, gamepad2, autoEnd);
+         r = new Robot(hardwareMap, autoEnd);
     }
 
     @Override
-    public void start() {
+    public void start(){
         r.rStart();
     }
-
     @Override
     public void loop() {
         r.dualControls();
