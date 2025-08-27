@@ -26,7 +26,7 @@ public class fourSamples {
                 .addPath(
                         new BezierLine(
                                 new Point(8.000, 103.900, Point.CARTESIAN),
-                                new Point(17, 121.800, Point.CARTESIAN)
+                                new Point(16.500, 123.500, Point.CARTESIAN)
                         )
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(-45))

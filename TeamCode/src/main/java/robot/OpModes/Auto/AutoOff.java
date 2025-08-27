@@ -57,7 +57,7 @@ public class AutoOff extends OpMode{
                 break;
 
             case 2:
-                if(!follower.isBusy() && timer.seconds() > 1.5){
+                if(!follower.isBusy() && timer.seconds() > 3.5){
                     Angle.angulo.setPosition(1);
                     timer.reset();
                     setPathState(3);
