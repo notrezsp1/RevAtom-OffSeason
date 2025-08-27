@@ -29,7 +29,6 @@ import robot.Subsystems.Initialize;
 public class AutoOff extends OpMode{
     private Follower follower;
 
-    private Timer pathTimer, opmodeTimer;
     private int pathState;
     private final ElapsedTime timer = new ElapsedTime();
 
@@ -42,24 +41,21 @@ public class AutoOff extends OpMode{
             case 0:
                 follower.followPath(path1, true );
                 Claw.close();
-                timer.reset();
                 setPathState(1);
                 break;
 
             case 1:
                 if (!follower.isBusy() && timer.seconds() > 1.5){
-                    Arm.toPosition(2200, 1);
-                    Extend.toPosition(3800);
+                    Arm.toPosition(2500, 1);
+                    Extend.toPosition(3600);
                     Angle.angulo.setPosition(0.3);
-                    timer.reset();
                     setPathState(2);
                 }
                 break;
 
             case 2:
-                if(!follower.isBusy() && timer.seconds() > 3.5){
+                if(!follower.isBusy() && timer.seconds() > 2.5){
                     Angle.angulo.setPosition(1);
-                    timer.reset();
                     setPathState(3);
                 }
                 break;
@@ -67,7 +63,7 @@ public class AutoOff extends OpMode{
             case 3:
                 if (!follower.isBusy() && timer.seconds() > 1.5){
                     Claw.open();
-                    timer.reset();
+
                     setPathState(4);
                 }
                 break;
@@ -75,7 +71,6 @@ public class AutoOff extends OpMode{
             case 4:
                 if (!follower.isBusy() && timer.seconds() > 0.5){
                     Angle.angulo.setPosition(0.3);
-                    timer.reset();
                     setPathState(5);
                 }
                 break;
@@ -83,16 +78,46 @@ public class AutoOff extends OpMode{
             case 5:
                 if (!follower.isBusy() && timer.seconds() > 0.5){
                     Extend.toPosition(0);
-                    timer.reset();
                     setPathState(6);
                 }
                 break;
 
             case 6:
                 if (!follower.isBusy() && timer.seconds() > 1.5){
-                    Arm.toPosition(700, 0.5);
-                    timer.reset();
+                    Arm.toPosition(800, 0.6);
                     setPathState(7);
+                }
+                break;
+            case 7:
+                if (!follower.isBusy() && timer.seconds() > 1.6){
+                    follower.followPath(path2, true);
+                    setPathState(8);
+                }
+                break;
+
+
+            case 8:
+                if (!follower.isBusy() && timer.seconds() > 2.5){
+                    Extend.toPosition(3600);
+                    setPathState(9);
+                }
+                break;
+            case 9:
+                if (!follower.isBusy() && timer.seconds() > 2.6){
+                    Arm.toPosition(0,1);
+                    setPathState(10);
+                }
+            case 10:
+                if (!follower.isBusy() && timer.seconds() > 1.5){
+                    Claw.close();
+                    setPathState(-1);
+                }
+                break;
+
+            case 11:
+                if(!follower.isBusy() && timer.seconds()> 1.0){
+                    follower.followPath(path3, true);
+                    setPathState(-1);
                 }
                 break;
         }
@@ -101,35 +126,23 @@ public class AutoOff extends OpMode{
 
     public void setPathState(int pState){
         pathState = pState;
-        pathTimer.resetTimer();
+        timer.reset();
     }
 
     @Override
     public void init() {
-        pathTimer = new Timer();
-        opmodeTimer = new Timer();
-        opmodeTimer.resetTimer();
         Initialize robot = new Initialize(hardwareMap);
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(fourSamples.start);
         fourSamples.buildPaths(follower);
+        telemetry();
     }
 
     @Override
     public void loop() {
-
-
         follower.update();
         autonomousPathUpdate();
-
-        telemetry.addData("path state", pathState);
-        telemetry.addData("x", follower.getPose().getX());
-        telemetry.addData("y", follower.getPose().getY());
-        telemetry.addData("heading", follower.getPose().getHeading());
-        telemetry.addData("isBusy", follower.isBusy());
-        telemetry.addData("Current Target", follower.getCurrentPath());
-        telemetry.update();
     }
 
     @Override
@@ -137,16 +150,23 @@ public class AutoOff extends OpMode{
 
     @Override
     public void start(){
-        opmodeTimer.resetTimer();
-        setPathState (0);
+        timer.reset();
+        setPathState(0);
     }
 
     @Override
     public void stop(){
 
     }
-
-
-
-
+    public void telemetry(){
+        telemetry.addData("path state", pathState);
+        telemetry.addData("x", follower.getPose().getX());
+        telemetry.addData("y", follower.getPose().getY());
+        telemetry.addData("heading", follower.getPose().getHeading());
+        telemetry.addData("isBusy", follower.isBusy());
+        telemetry.addData("Current Target", follower.getCurrentPath());
+        telemetry.addData("Current Target of Extend", Extend.extend.getCurrentPosition());
+        telemetry.addData("Current Target of Arm", Arm.arm.getCurrentPosition());
+        telemetry.update();
+    }
 }

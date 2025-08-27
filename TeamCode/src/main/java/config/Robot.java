@@ -50,17 +50,22 @@ public class Robot {
     }
 
     private void controlarBraco() {
-        if (controleManualBraco) {
+
             double potencia = -g2.left_stick_y;
             Arm.controlManual(potencia);
+
+        if (g2.dpad_up) {
+            Arm.toPosition(2200, 1);
+        }
+        if (g2.dpad_down) {
+            Arm.toPosition(0, 1);
         }
     }
 
     private void controlarLinear() {
-        if (controleManualLinear) {
             double potencia = -g2.right_stick_y;
             Extend.setManualPower(potencia);
-        }
+
 
         if (g2.dpad_right) {
             Extend.retract();
@@ -89,10 +94,9 @@ public class Robot {
     }
 
     private void atualizarTelemetria() {
-        t.addData("Modo Braço", controleManualBraco ? "MANUAL" : "AUTOMÁTICO");
+
         t.addData("Posição Braço", Arm.arm.getCurrentPosition());
         t.addData("Posição Linear", Extend.extend.getCurrentPosition());
-        t.addData("Modo Linear", controleManualLinear ? "MANUAL" : "AUTOMÁTICO");
         t.update();
     }
 
